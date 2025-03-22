@@ -1,14 +1,14 @@
 # Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# logs
+# *.log
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
+# pnpm-debug.log*
+# lerna-debug.log*
 
 # Dependency directories
-node_modules/
+*node_modules/
 dist-ssr/
 .local
 
@@ -17,9 +17,9 @@ dist-ssr/
 db.json
 
 # Editor directories and files
-.vscode/
-!.vscode/extensions.json
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
+# .vscode/
+# !.vscode/extensions.json
+# .DS_Store
+# *.suo
+# *.ntvs*
+# *.njsproj
