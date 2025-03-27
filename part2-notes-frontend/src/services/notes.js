@@ -1,10 +1,7 @@
 import axios from "axios";
 
 const baseURL = "/api/notes";
-// const getAll = () => {
-//   const request = axios.get(baseURL);
-//   return request.then((response) => response.data);
-// };
+
 const getAll = () => {
   const request = axios.get(baseURL);
   const nonExisting = {
@@ -12,7 +9,11 @@ const getAll = () => {
     content: "This note is not saved to server",
     important: true,
   };
-  return request.then((response) => response.data.concat(nonExisting));
+
+  return request.then((response) => {
+    console.log("get result: ", response);
+    return response.data.concat(nonExisting);
+  });
 };
 
 const create = (newObj) => {
