@@ -1,9 +1,11 @@
+require("dotenv").config(); //the .env file is in the same dir. if not specify
 const express = require("express");
-// const cors = require("cors");
+const Note = require("./models/note");
+// const mongoose = require("mongoose");
 
 const app = express();
 app.use(express.json()); //mid ware to parse the req.body
-// app.use(cors());
+
 //mid ware to print request
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
@@ -13,40 +15,22 @@ const requestLogger = (request, response, next) => {
   next();
 };
 app.use(requestLogger);
-// //mid ware to handle request to an unknown endpoint
-// const unknownEndpoint = (request, response) => {
-//   response.status(404).send({ error: "unknown endpoint" });
-// };
 
-// app.use(unknownEndpoint);
-
-let notes = [
-  { id: "1", content: "HTML is easy", important: true },
-  { id: "2", content: "Browser can execute only JavaScript", important: false },
-  {
-    id: "3",
-    content: "GET and POST are the most important methods of HTTP protocol",
-    important: true,
-  },
-  {
-    id: "4",
-    content: "sdasdfasdfasdfasf",
-    important: true,
-  },
-];
+//
 app.use(express.static("dist")); //serve static files
-//handle get request to the base url
-app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
+
 //handle get request to the whole note res
 app.get("/api/notes", (request, response) => {
-  response.json(notes);
+  Note.find({}).then((notes) => {
+    response.json(notes);
+    console.log(JSON.stringify(notes)); //print the result
+  });
 });
 //handle get request to a specific note
 app.get("/api/notes/:id", (request, response) => {
   const id = request.params.id;
-  const note = notes.find((note) => note.id === id);
+  const note = JSON.stringify(Note.find({})).find((note) => note.id === id);
+  //  const note  = Note.find({id:request.params.id})
   if (note) {
     response.json(note);
   } else {
@@ -84,12 +68,11 @@ app.post("/api/notes", (request, response) => {
   response.json(note);
 });
 
-// const unknownEndpoint = (request, response) => {
-//   response.status(404).send({ error: "unknown endpoint" });
-// };
-// app.use(unknownEndpoint);
-
-const PORT = process.env.PORT || 3001;
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+app.use(unknownEndpoint);
+const PORT = process.env.PORT; //||3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
