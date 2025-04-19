@@ -1,9 +1,21 @@
 GET http://localhost:3001/api/notes
 
 ###
+GET http://localhost:3001/api/notes/someinvalidid
+
+###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 
-{"content":"sdasdfasdfasdfasf","important":true}
+{"content":"new","important":true}
 
+###
+DELETE http://localhost:3001/api/notes/67f372fce86e2931de477e5c
+
+###
+PUT http://localhost:3001/api/notes/67f372edf946c0c65d6d8602
+Content-Type: application/json
+
+
+{"content":"updated note","important":false}
